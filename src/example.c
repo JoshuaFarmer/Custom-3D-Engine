@@ -10,26 +10,14 @@ void Init(int argc, char *argv[])
         Objects[1]->texture = EnneaLoadTexture("assets/face.jpg");
         Objects[2]->texture = EnneaLoadTexture("assets/face.jpg");
         Objects[3]->texture = EnneaLoadTexture("assets/old computer monitor.png");
-        Objects[0]->pos[0] = 0;
-        Objects[0]->pos[1] = 5;
-        Objects[0]->pos[2] = 0;
-        Objects[0]->rvel[0] += 5.0f;
-        Objects[0]->rvel[1] += 2.0f;
-        Objects[0]->rvel[2] += 1.0f;
-
-        Objects[1]->pos[0] = 5;
-        Objects[1]->pos[1] = 5;
-        Objects[1]->pos[2] = 5;
-        Objects[1]->rvel[1] += 25.0f;
-        Objects[2]->pos[0] = -5;
-        Objects[2]->pos[1] = 5;
-        Objects[2]->pos[2] = -5;
-        Objects[2]->rvel[1] += 25.0f;
-
-        Objects[3]->pos[0] = -3;
-        Objects[3]->pos[1] = 7;
-        Objects[3]->pos[2] = -3;
-        Objects[3]->rvel[1] += 25.0f;
+        EnneaGoto(Objects[0],0,5,0);
+        EnneaGoto(Objects[1],5,5,5);
+        EnneaGoto(Objects[2],-5,5,-5);
+        EnneaGoto(Objects[3],-3,7,-3);
+        EnneaTorque(Objects[0],0.0,25.0,0.0);
+        EnneaTorque(Objects[1],5.0,2.0,1.0);
+        EnneaTorque(Objects[2],5.0,2.0,1.0);
+        EnneaTorque(Objects[3],5.0,2.0,1.0);
 }
 
 void Draw()

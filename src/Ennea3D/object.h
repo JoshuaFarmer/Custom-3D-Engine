@@ -197,4 +197,38 @@ void EnneaDrawObjects()
         }
 }
 
+void EnneaGoto(Object *obj, double x, double y, double z)
+{
+        obj->vel[0]=0;
+        obj->vel[1]=0;
+        obj->vel[2]=0;
+        obj->pos[0]=x;
+        obj->pos[1]=y;
+        obj->pos[2]=z;
+}
+
+void EnneaLook(Object *obj, double x, double y, double z)
+{
+        obj->rvel[0]=0;
+        obj->rvel[1]=0;
+        obj->rvel[2]=0;
+        obj->rot[0]=x;
+        obj->rot[1]=y;
+        obj->rot[2]=z;
+}
+
+void EnneaTorque(Object *obj, double x, double y, double z)
+{
+        obj->rvel[0]+=x;
+        obj->rvel[1]+=y;
+        obj->rvel[2]+=z;
+}
+
+void EnneaForce(Object *obj, double x, double y, double z)
+{
+        obj->vel[0]+=x;
+        obj->vel[1]+=y;
+        obj->vel[2]+=z;
+}
+
 #endif

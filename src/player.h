@@ -143,8 +143,8 @@ bool _EnginePlayerColliding()
 
 void _EnginePlayerGravity()
 {
-        // if (_EnginePlayerColliding() == false)
-        //         camYVel -= (GRAVITY / 1000000) * deltaTime;
+        if (_EnginePlayerColliding() == false)
+                camYVel -= (GRAVITY / 1000000) * deltaTime;
 }
 
 #endif

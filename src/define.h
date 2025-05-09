@@ -49,7 +49,9 @@ typedef struct
         fastObjMesh *mesh;
 
         // properties
-        double scale[3], pos[3], colour[3];
+        double scale[3];
+        double pos[3];
+        double colour[3];
         double rot[3];
         double vel[3];
         double rvel[3];

@@ -101,7 +101,7 @@ void _EngineRender()
         }
 
         Draw();
-        _EnginePlayerGravity();
+        //_EnginePlayerGravity();
 
         int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
         deltaTime = timeSinceStart - oldTimeSinceStart;

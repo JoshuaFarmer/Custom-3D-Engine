@@ -92,16 +92,12 @@ Object *_EngineCreateObject(char *path)
 void _EngineDrawObject(Object *object)
 {
         glPushMatrix();
-        if (camera == false)
-        {
-                glRotatef(object->rot[0], 1, 0, 0);
-                glRotatef(object->rot[1], 0, 1, 0);
-                glRotatef(object->rot[2], 0, 0, 1);
-        }
-
+        glTranslatef(object->pos[0], object->pos[1], object->pos[2]);
+        glRotatef(object->rot[0], 1, 0, 0);
+        glRotatef(object->rot[1], 0, 1, 0);
+        glRotatef(object->rot[2], 0, 0, 1);
+        glScalef(object->scale[0], object->scale[1], object->scale[2]);
         glColor3f(object->colour[0], object->colour[1], object->colour[2]);
-
-        // Enable 2D texturing
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, object->texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -114,22 +110,27 @@ void _EngineDrawObject(Object *object)
                 {
                         fastObjIndex index = object->mesh->indices[i * 3 + j];
 
-                        // Add texture coordinates
                         glTexCoord2f(
                             object->mesh->texcoords[index.t * 2],
-                            1.0 - object->mesh->texcoords[index.t * 2 + 1]);
+                            1.0 - object->mesh->texcoords[index.t * 2 + 1]
+                        );
 
                         glVertex3f(
-                            object->pos[0] + object->mesh->positions[index.p * 3] * object->scale[0],
-                            object->pos[1] + object->mesh->positions[index.p * 3 + 1] * object->scale[1],
-                            object->pos[2] + object->mesh->positions[index.p * 3 + 2] * object->scale[2]);
+                            object->mesh->positions[index.p * 3] * object->scale[0],
+                            object->mesh->positions[index.p * 3 + 1] * object->scale[1],
+                            object->mesh->positions[index.p * 3 + 2] * object->scale[2]
+                        );
                 }
                 glEnd();
         }
 
+        // Disable texturing
         glDisable(GL_TEXTURE_2D);
-        glPopMatrix();
+
+        // Reset the color to white
         glColor3f(1, 1, 1);
+
+        glPopMatrix();
 }
 
 void _EngineUpdateObject(Object *obj, double deltaTime, double air_resistance)

@@ -8,6 +8,8 @@
 #define PI M_PI
 #define FPS 60
 
+#define ENGINE_VERSION 1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,8 +51,8 @@ typedef struct
         // properties
         double scale[3], pos[3], colour[3];
         double rot[3];
-        double vel[0];
-        double rvel[0];
+        double vel[3];
+        double rvel[3];
         bool frozen;
         int ID;
         int GpInt[128];
@@ -74,5 +76,7 @@ bool lock_cursor = true, en_gravity = true, nerd = false;
 bool fucked = false;
 
 void _EngineEnd();
+void Draw();
+void End();
 
 #endif

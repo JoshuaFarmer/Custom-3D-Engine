@@ -89,18 +89,18 @@ void _EngineRender()
 
         _EngineCamera();
 
+        if (_EngineDrawGrid_)
+        {
+                _EngineDrawGrid();
+        }
+        /* update */
         for (int i = 0; i < object_count; ++i)
         {
                 _EngineUpdateObject(Objects[i], deltaTime, air_resistance);
-
-                // Check collision with the player
                 handlePlayerCollision(Objects[i]);
-
-                _EngineDrawObject(Objects[i]);
-                if (nerd)
-                        _EngineStatsForNerds(Objects[i]);
         }
 
+        Draw();
         _EnginePlayerGravity();
 
         int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);

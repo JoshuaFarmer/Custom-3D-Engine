@@ -11,8 +11,7 @@
 // --------------------- //
 
 void Init(int argc, char *argv[]);
-void Draw();
-void End();
+
 
 // --------------------- //
 

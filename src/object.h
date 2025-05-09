@@ -193,13 +193,6 @@ void _EngineDrawObjects()
 {
         for (int i = 0; i < object_count; ++i)
         {
-                Objects[i]->rot[0] += (Objects[i]->rvel[0] / 25) * deltaTime;
-                Objects[i]->rot[1] += (Objects[i]->rvel[1] / 25) * deltaTime;
-                Objects[i]->rot[2] += (Objects[i]->rvel[2] / 25) * deltaTime;
-                Objects[i]->pos[0] += (Objects[i]->vel[0] / 25) * deltaTime;
-                Objects[i]->pos[1] += (Objects[i]->vel[1] / 25) * deltaTime;
-                Objects[i]->pos[2] += (Objects[i]->vel[2] / 25) * deltaTime;
-
                 _EngineDrawObject(Objects[i]);
                 if (nerd)
                         _EngineStatsForNerds(Objects[i]);

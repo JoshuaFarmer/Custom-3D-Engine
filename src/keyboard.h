@@ -4,11 +4,10 @@
 #include "define.h"
 #include "render.h"
 
-void Keyboard(char key);
-void _EngineKey(unsigned char key, int x, int y);
-void _EngineKeyUp(unsigned char key, int x, int y);
+void EnneaKey(unsigned char key, int x, int y);
+void EnneaKeyUp(unsigned char key, int x, int y);
 
-void _EngineKey(unsigned char key, int x, int y)
+void EnneaKey(unsigned char key, int x, int y)
 {
         switch (key)
         {
@@ -46,14 +45,14 @@ void _EngineKey(unsigned char key, int x, int y)
                 nerd = !nerd;
                 break;
         case 27:
-                _EngineEnd();
+                EnneaEnd();
                 break;
         }
 
         Keyboard(key);
 }
 
-void _EngineKeyUp(unsigned char key, int x, int y)
+void EnneaKeyUp(unsigned char key, int x, int y)
 {
         switch (key)
         {

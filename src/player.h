@@ -4,13 +4,12 @@
 
 #include "define.h"
 
-bool _EnginePlayerColliding();
-void _EnginePlayerGravity();
-void handlePlayerCollision(Object *obj);
-void _EngineCamera();
-void DrawOnCamera();
-void _EngineMotion(int x, int y);
-void _EngineMove(char code);
+bool EnneaPlayerColliding();
+void EnneaPlayerGravity();
+void EnneaHandlePlayerCollision(Object *obj);
+void EnneaCamera();
+void EnneaMotion(int x, int y);
+void EnneaMove(char code);
 
 Motion motion = {false, false, false, false, false, false};
 
@@ -22,7 +21,7 @@ double GRAVITY = 1;
 double camSpeedIncrease = 1;
 bool camera = false;
 
-void _EngineMove(char code)
+void EnneaMove(char code)
 {
         switch (code)
         {
@@ -51,7 +50,7 @@ void _EngineMove(char code)
         }
 }
 
-void _EngineMotion(int x, int y)
+void EnneaMotion(int x, int y)
 {
         /*
                 two variables to store X and Y coordinates, as observed from the center
@@ -66,21 +65,21 @@ void _EngineMotion(int x, int y)
         pitch += ((((double)dev_y / 20.0) * mouseSensitivity) / 25) * deltaTime;
 }
 
-void _EngineCamera()
+void EnneaCamera()
 {
         /* movement */
         if (motion.Forward)
-                _EngineMove('W');
+                EnneaMove('W');
         if (motion.Backward)
-                _EngineMove('S');
+                EnneaMove('S');
         if (motion.Left)
-                _EngineMove('A');
+                EnneaMove('A');
         if (motion.Right)
-                _EngineMove('D');
+                EnneaMove('D');
         if (motion.Up)
-                _EngineMove('E');
+                EnneaMove('E');
         if (motion.Down)
-                _EngineMove('Q');
+                EnneaMove('Q');
         pitch = (pitch >= 90) ? 90 : pitch;
         pitch = (pitch <= -90) ? -90 : pitch;
         camera = true;
@@ -90,13 +89,13 @@ void _EngineCamera()
         glRotatef(-yaw, 0.0, 1.0, 0.0);
         glRotatef(-roll, 0.0, 0.0, 1.0);
         camY += camYVel * deltaTime;
-        while (_EnginePlayerColliding())
+        while (EnneaPlayerColliding())
                 camY += 0.01;
         glTranslatef(-camX, -camY, -camZ);
 }
 
 // Function to check collision between player and object
-bool checkPlayerObjectCollision(const Object *obj)
+bool EnneaPlayerObjectCollision(const Object *obj)
 {
         // Calculate the player's new position based on its velocity
         double newCamY = camY + camYVel * deltaTime;
@@ -114,10 +113,10 @@ bool checkPlayerObjectCollision(const Object *obj)
         return collisionX && collisionY && collisionZ;
 }
 
-void handlePlayerCollision(Object *obj)
+void EnneaHandlePlayerCollision(Object *obj)
 {
         // Adjust the player's position based on the collision
-        if (checkPlayerObjectCollision(obj))
+        if (EnneaPlayerObjectCollision(obj))
         {
                 // Example of simple collision response
                 // This can be more sophisticated based on your game design
@@ -127,23 +126,19 @@ void handlePlayerCollision(Object *obj)
         }
 }
 
-bool _EnginePlayerColliding()
+bool EnneaPlayerColliding()
 {
-        int collision = 0;
+        int collisions = 0;
         for (int a = 0; a < object_count; ++a)
         {
-                collision += checkPlayerObjectCollision(Objects[a]);
+                collisions += EnneaPlayerObjectCollision(Objects[a]);
         }
-        if (collision != 0)
-        {
-                return true;
-        }
-        return false;
+        return collisions != 0;
 }
 
-void _EnginePlayerGravity()
+void EnneaPlayerGravity()
 {
-        if (_EnginePlayerColliding() == false)
+        if (EnneaPlayerColliding() == false)
                 camYVel -= (GRAVITY / 1000000) * deltaTime;
 }
 

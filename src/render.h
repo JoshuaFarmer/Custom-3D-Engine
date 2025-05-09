@@ -1,15 +1,15 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-void _EngineStatsForNerds(Object *object);
-void _EngineRender();
-void _EngineDrawGrid();
+void EnneaStatsForNerds(Object *object);
+void EnneaRender();
+void EnneaDrawGrid();
 
 #include "define.h"
 #include "player.h"
 #include "object.h"
 
-void _EngineDrawGrid()
+void EnneaDrawGrid()
 {
         glColor3f(0, 0, 0);
         // draw x lines
@@ -50,7 +50,7 @@ void _EngineDrawGrid()
         glColor3f(1, 1, 1);
 }
 
-void _EngineStatsForNerds(Object *object)
+void EnneaStatsForNerds(Object *object)
 {
         glPushMatrix();
         glRotatef(object->rot[0], 1, 0, 0);
@@ -76,7 +76,7 @@ void _EngineStatsForNerds(Object *object)
         glPopMatrix();
 }
 
-void _EngineRender()
+void EnneaRender()
 {
         // clear
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -87,21 +87,21 @@ void _EngineRender()
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        _EngineCamera();
+        EnneaCamera();
 
-        if (_EngineDrawGrid_)
+        if (EnneaDrawGrid_)
         {
-                _EngineDrawGrid();
+                EnneaDrawGrid();
         }
         /* update */
         for (int i = 0; i < object_count; ++i)
         {
-                _EngineUpdateObject(Objects[i], deltaTime, air_resistance);
-                handlePlayerCollision(Objects[i]);
+                EnneaUpdateObject(Objects[i], deltaTime, air_resistance);
+                EnneaHandlePlayerCollision(Objects[i]);
         }
 
         Draw();
-        //_EnginePlayerGravity();
+        //EnneaPlayerGravity();
 
         int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
         deltaTime = timeSinceStart - oldTimeSinceStart;

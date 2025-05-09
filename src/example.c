@@ -1,9 +1,9 @@
-#define _EngineDrawGrid_ 1
+#define EnneaDrawGrid_ 1
 #include "engine.h"
 
 void Init(int argc, char *argv[])
 {
-        _EngineCreateObjects(1);
+        EnneaCreateObjects(1);
         Objects[0]->pos[0] = 10;
         Objects[0]->pos[1] = 1;
         Objects[0]->pos[2] = 10;
@@ -12,7 +12,7 @@ void Init(int argc, char *argv[])
 
 void Draw()
 {
-        _EngineDrawObjects();
+        EnneaDrawObjects();
 }
 
 void End()

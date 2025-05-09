@@ -12,16 +12,15 @@
 
 void Init(int argc, char *argv[]);
 
+// --------------------- //
+
+void EnneaInit();
+void EnneaReshape(int w, int h);
+void EnneaTimer();
 
 // --------------------- //
 
-void _EngineInit();
-void _EngineReshape(int w, int h);
-void _EngineTimer();
-
-// --------------------- //
-
-void _EngineInit()
+void EnneaInit()
 {
         glutSetCursor(GLUT_CURSOR_NONE);
         glEnable(GL_DEPTH_TEST);
@@ -30,15 +29,15 @@ void _EngineInit()
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
-void _EngineEnd()
+void EnneaEnd()
 {
-        _EngineDestroyObjects();
+        EnneaDestroyObjects();
         free(Objects);
         End();
         exit(0);
 }
 
-void _EngineReshape(int w, int h)
+void EnneaReshape(int w, int h)
 {
         glViewport(0, 0, w, h);
         glMatrixMode(GL_PROJECTION);
@@ -52,12 +51,12 @@ void _EngineReshape(int w, int h)
   at a rate of FPS times in one second. The constant FPS is defined above and
   has the value of 60
 */
-void _EngineTimer()
+void EnneaTimer()
 {
         glutPostRedisplay();
         if (lock_cursor)
                 glutWarpPointer(width / 2, height / 2);
-        glutTimerFunc(1000 / FPS, _EngineTimer, 0);
+        glutTimerFunc(1000 / FPS, EnneaTimer, 0);
 }
 
 int main(int argc, char *argv[])
@@ -69,7 +68,7 @@ int main(int argc, char *argv[])
         // start position, dimensions, title
         glutInitWindowPosition(100, 100);
         glutInitWindowSize(width, height);
-        glutCreateWindow(_EngineWindowName);
+        glutCreateWindow(EnneaWindowName);
         GLenum err = glewInit();
         if (err != GLEW_OK)
         {
@@ -77,19 +76,19 @@ int main(int argc, char *argv[])
                 exit(1);
         }
 
-        _EngineInit();
+        EnneaInit();
         Init(argc, argv);
 
-        glutDisplayFunc(_EngineRender);
-        glutKeyboardFunc(_EngineKey);
-        glutKeyboardUpFunc(_EngineKeyUp);
-        glutPassiveMotionFunc(_EngineMotion);
-        glutTimerFunc(0, _EngineTimer, 0);
+        glutDisplayFunc(EnneaRender);
+        glutKeyboardFunc(EnneaKey);
+        glutKeyboardUpFunc(EnneaKeyUp);
+        glutPassiveMotionFunc(EnneaMotion);
+        glutTimerFunc(0, EnneaTimer, 0);
 
         glRotatef(0, 0, 0, 0);
 
         glutMainLoop();
-        _EngineEnd();
+        EnneaEnd();
 }
 
 #endif

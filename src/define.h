@@ -8,7 +8,7 @@
 #define PI M_PI
 #define FPS 60
 
-#define ENGINE_VERSION 1
+#define ENNEA_VERSION 1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,11 +22,11 @@
 #include "imports/obj.h"
 #include "imports/stb_image.h"
 
-#ifndef _EngineDrawGrid_
-#define _EngineDrawGrid_ 0
+#ifndef EnneaDrawGrid_
+#define EnneaDrawGrid_ 0
 #endif
-#ifndef _EngineWindowName
-#define _EngineWindowName "engine"
+#ifndef EnneaWindowName
+#define EnneaWindowName "Ennea"
 #endif
 
 typedef struct
@@ -77,8 +77,11 @@ double air_resistance = 0.5f;
 bool lock_cursor = true, en_gravity = true, nerd = false;
 bool fucked = false;
 
-void _EngineEnd();
-void Draw();
-void End();
+void EnneaEnd();
+
+void Keyboard(char key); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
+void DrawOnCamera(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
+void Draw(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
+void End(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
 
 #endif

@@ -4,49 +4,49 @@
 #include "define.h"
 #include "render.h"
 
-GLuint _EngineLoadTexture(char *path);
-void _EngineUpdateObject(Object *, double, double);
-void _EngineDrawObject(Object *object);
-Object *_EngineCreateObject(char *path);
-void _EngineDrawObject(Object *object);
-void _EngineSetMesh(Object *obj, char *path);
-void _EngineCreateObjects(int count);
-void _EngineDestroyObjects();
-void _EngineDestroyObject(Object *object);
+GLuint EnneaLoadTexture(char *path);
+void EnneaUpdateObject(Object *, double, double);
+void EnneaDrawObject(Object *object);
+Object *EnneaCreateObject(char *path);
+void EnneaDrawObject(Object *object);
+void EnneaSetMesh(Object *obj, char *path);
+void EnneaCreateObjects(int count);
+void EnneaDestroyObjects();
+void EnneaDestroyObject(Object *object);
 
-void _EngineDestroyObject(Object *object)
+void EnneaDestroyObject(Object *object)
 {
         fast_obj_destroy(object->mesh);
         free(object);
 }
 
-void _EngineDestroyObjects()
+void EnneaDestroyObjects()
 {
         for (int i = 0; i < object_count; ++i)
-                _EngineDestroyObject(Objects[i]);
+                EnneaDestroyObject(Objects[i]);
         free(Objects);
 }
 
-void _EngineCreateObjects(int count)
+void EnneaCreateObjects(int count)
 {
         for (int i = 0; i < object_count; ++i)
-                _EngineDestroyObject(Objects[i]);
+                EnneaDestroyObject(Objects[i]);
         free(Objects);
         Objects = malloc(count * sizeof(Object *));
         object_count = count;
         for (int i = 0; i < count; ++i)
         {
-                Objects[i] = _EngineCreateObject("assets/box.obj");
+                Objects[i] = EnneaCreateObject("assets/box.obj");
         }
 }
 
-void _EngineSetMesh(Object *obj, char *path)
+void EnneaSetMesh(Object *obj, char *path)
 {
         fast_obj_destroy(obj->mesh);
         obj->mesh = fast_obj_read(path);
 }
 
-Object *_EngineCreateObject(char *path)
+Object *EnneaCreateObject(char *path)
 {
         Object *object = malloc(sizeof(Object));
         object->mesh = fast_obj_read(path);
@@ -84,12 +84,12 @@ Object *_EngineCreateObject(char *path)
         object->rvel[2] = 0.0f;
 
         object->frozen = true;
-        object->texture = _EngineLoadTexture("assets/no-texture.png");
+        object->texture = EnneaLoadTexture("assets/no-texture.png");
 
         return object;
 }
 
-void _EngineDrawObject(Object *object)
+void EnneaDrawObject(Object *object)
 {
         glPushMatrix();
         glTranslatef(object->pos[0], object->pos[1], object->pos[2]);
@@ -133,7 +133,7 @@ void _EngineDrawObject(Object *object)
         glPopMatrix();
 }
 
-void _EngineUpdateObject(Object *obj, double deltaTime, double air_resistance)
+void EnneaUpdateObject(Object *obj, double deltaTime, double air_resistance)
 {
         obj->rot[0] += (obj->rvel[0] / 25) * deltaTime;
         obj->rot[1] += (obj->rvel[1] / 25) * deltaTime;
@@ -158,7 +158,7 @@ void _EngineUpdateObject(Object *obj, double deltaTime, double air_resistance)
         }
 }
 
-int checkCollision(Object *obj1, Object *obj2)
+int EnneaCheckCollision(Object *obj1, Object *obj2)
 {
         // object i
         obj1->Collision.minX = -obj1->scale[0];
@@ -190,13 +190,13 @@ int checkCollision(Object *obj1, Object *obj2)
         return 1;         // Collided along all axes
 }
 
-void _EngineDrawObjects()
+void EnneaDrawObjects()
 {
         for (int i = 0; i < object_count; ++i)
         {
-                _EngineDrawObject(Objects[i]);
+                EnneaDrawObject(Objects[i]);
                 if (nerd)
-                        _EngineStatsForNerds(Objects[i]);
+                        EnneaStatsForNerds(Objects[i]);
         }
 }
 

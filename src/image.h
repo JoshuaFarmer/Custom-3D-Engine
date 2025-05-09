@@ -3,9 +3,9 @@
 
 #include "define.h"
 
-GLuint _EngineLoadTexture(char *path);
+GLuint EnneaLoadTexture(char *path);
 
-GLuint _EngineLoadTexture(char *path)
+GLuint EnneaLoadTexture(char *path)
 {
         int width, height, channels;
         unsigned char *data = stbi_load(path, &width, &height, &channels, 0);

@@ -51,19 +51,18 @@ Object *EnneaCreateObject(char *path)
         Object *object = malloc(sizeof(Object));
         object->mesh = fast_obj_read(path);
         // default values
-
         object->scale[0] = 1.0f;
         object->scale[1] = 1.0f;
         object->scale[2] = 1.0f;
 
-        object->Collision.minX = -object->scale[0];
-        object->Collision.maxX = object->scale[0];
+        object->Collision.minX = -(object->scale[0] / 2);
+        object->Collision.maxX = object->scale[0] / 2;
 
-        object->Collision.minY = -object->scale[1];
-        object->Collision.maxY = object->scale[1];
+        object->Collision.minY = -(object->scale[1] / 2);
+        object->Collision.maxY = object->scale[1] / 2;
 
-        object->Collision.minZ = -object->scale[2];
-        object->Collision.maxZ = object->scale[2];
+        object->Collision.minZ = (-object->scale[2]) / 2;
+        object->Collision.maxZ = object->scale[2] / 2;
 
         object->pos[0] = 0.0f;
         object->pos[1] = 0.0f;
@@ -112,14 +111,12 @@ void EnneaDrawObject(Object *object)
 
                         glTexCoord2f(
                             object->mesh->texcoords[index.t * 2],
-                            1.0 - object->mesh->texcoords[index.t * 2 + 1]
-                        );
+                            1.0 - object->mesh->texcoords[index.t * 2 + 1]);
 
                         glVertex3f(
                             object->mesh->positions[index.p * 3] * object->scale[0],
                             object->mesh->positions[index.p * 3 + 1] * object->scale[1],
-                            object->mesh->positions[index.p * 3 + 2] * object->scale[2]
-                        );
+                            object->mesh->positions[index.p * 3 + 2] * object->scale[2]);
                 }
                 glEnd();
         }

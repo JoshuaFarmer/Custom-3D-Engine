@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 #include <math.h>
 #include <stdbool.h>
 #include <GL/glew.h>
@@ -41,7 +42,7 @@ typedef struct
         double minZ, maxZ;
 } BoundingBox;
 
-typedef struct
+typedef struct Object
 {
         // mesh & texture
         int texw, texh, nrchannels;

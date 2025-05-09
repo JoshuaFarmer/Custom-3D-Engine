@@ -17,6 +17,7 @@ double pitch = 0.0, yaw = 0.0, roll = 0.0;
 double camX = 0, camY = 0, camZ = 0;
 double camYVel = 0;
 double player_height = 2;
+double player_width = 1.0;
 double GRAVITY = 1;
 double camSpeedIncrease = 1;
 bool camera = false;
@@ -101,14 +102,14 @@ bool EnneaPlayerObjectCollision(const Object *obj)
         double newCamY = camY + camYVel * deltaTime;
 
         // Check if the player's bounding box intersects with the object's bounding box
-        bool collisionX = (camX + player_height) >= (obj->Collision.minX + obj->pos[0]) &&
-                          (camX - player_height) <= (obj->Collision.maxX + obj->pos[0]);
+        bool collisionX = (camX + player_width) >= (obj->Collision.minX + obj->pos[0]) &&
+                          (camX - player_width) <= (obj->Collision.maxX + obj->pos[0]);
 
         bool collisionY = (newCamY + player_height) >= (obj->Collision.minY + obj->pos[1]) &&
                           (newCamY - player_height) <= (obj->Collision.maxY + obj->pos[1]);
 
-        bool collisionZ = (camZ + player_height) >= (obj->Collision.minZ + obj->pos[2]) &&
-                          (camZ - player_height) <= (obj->Collision.maxZ + obj->pos[2]);
+        bool collisionZ = (camZ + player_width) >= (obj->Collision.minZ + obj->pos[2]) &&
+                          (camZ - player_width) <= (obj->Collision.maxZ + obj->pos[2]);
 
         return collisionX && collisionY && collisionZ;
 }

@@ -59,6 +59,13 @@ void EnneaTimer()
         glutTimerFunc(1000 / FPS, EnneaTimer, 0);
 }
 
+void EnneaMouseClick(int button, int state, int x, int y)
+{
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+        }
+}
+
 int main(int argc, char *argv[])
 {
         // init GL
@@ -83,6 +90,7 @@ int main(int argc, char *argv[])
         glutKeyboardFunc(EnneaKey);
         glutKeyboardUpFunc(EnneaKeyUp);
         glutPassiveMotionFunc(EnneaMotion);
+        glutMouseFunc(EnneaMouseClick);
         glutTimerFunc(0, EnneaTimer, 0);
 
         glRotatef(0, 0, 0, 0);

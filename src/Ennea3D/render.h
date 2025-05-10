@@ -11,7 +11,7 @@ void EnneaDrawGrid();
 
 void EnneaDrawGrid()
 {
-        glColor3f(0, 0, 0);
+        glColor3f(0.1, 0.1, 0.1);
         // draw x lines
         for (double z = 0; z <= grid_size * 2; z = z + grid_part_size)
         {

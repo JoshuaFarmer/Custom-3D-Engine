@@ -13,6 +13,7 @@ void Init(int argc, char *argv[])
         EnneaSetMesh(Guy,"assets/guy.obj");
         Monitor->texture = EnneaLoadTexture("assets/monitor.png");
         EnneaTorque(Monitor,0,1.0,0);
+        EnneaTorque(Guy,0,15.0,0);
         EnneaPositionXYZ(Guy,10,10,10);
 }
 

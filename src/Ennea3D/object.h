@@ -197,38 +197,54 @@ void EnneaDrawObjects()
         }
 }
 
-void EnneaGoto(Object *obj, double x, double y, double z)
+void EnneaPositionXYZ(Object *obj, double x, double y, double z)
 {
-        obj->vel[0]=0;
-        obj->vel[1]=0;
-        obj->vel[2]=0;
-        obj->pos[0]=x;
-        obj->pos[1]=y;
-        obj->pos[2]=z;
+        obj->vel[0] = 0;
+        obj->vel[1] = 0;
+        obj->vel[2] = 0;
+        obj->pos[0] = x;
+        obj->pos[1] = y;
+        obj->pos[2] = z;
 }
 
-void EnneaLook(Object *obj, double x, double y, double z)
+void EnneaRotateXYZ(Object *obj, double x, double y, double z)
 {
-        obj->rvel[0]=0;
-        obj->rvel[1]=0;
-        obj->rvel[2]=0;
-        obj->rot[0]=x;
-        obj->rot[1]=y;
-        obj->rot[2]=z;
+        obj->rvel[0] = 0;
+        obj->rvel[1] = 0;
+        obj->rvel[2] = 0;
+        obj->rot[0] = x;
+        obj->rot[1] = y;
+        obj->rot[2] = z;
 }
 
 void EnneaTorque(Object *obj, double x, double y, double z)
 {
-        obj->rvel[0]+=x;
-        obj->rvel[1]+=y;
-        obj->rvel[2]+=z;
+        obj->rvel[0] += x;
+        obj->rvel[1] += y;
+        obj->rvel[2] += z;
 }
 
-void EnneaForce(Object *obj, double x, double y, double z)
+void EnneaForceXYZ(Object *obj, double x, double y, double z)
 {
-        obj->vel[0]+=x;
-        obj->vel[1]+=y;
-        obj->vel[2]+=z;
+        obj->vel[0] += x;
+        obj->vel[1] += y;
+        obj->vel[2] += z;
+}
+
+void EnneaForce(Object *obj, double force)
+{
+        if (obj->frozen)
+                return;
+
+        double pitch = obj->rot[0];
+        double yaw = obj->rot[1];
+        double fx = cos(pitch) * sin(yaw);
+        double fy = sin(pitch);
+        double fz = cos(pitch) * cos(yaw);
+        printf("x=%lf,y=%lf,z=%lf\n",fx,fy,fz);
+        obj->vel[0] += fx * force;
+        obj->vel[1] += fy * force;
+        obj->vel[2] += fz * force;
 }
 
 #endif

@@ -61,9 +61,11 @@ typedef struct Object
         int GpInt[128];
         BoundingBox Collision;
         double radius;
+        struct Object *next;
 } Object;
 
-Object **Objects;
+//Object **Objects;
+Object *RootObject=NULL;
 int object_count = 0;
 
 double deltaTime = 0;
@@ -84,5 +86,6 @@ void Keyboard(char key); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
 void DrawOnCamera(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
 void Draw(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
 void End(); /* NOT IN ENGINE, MADE BY USER OF ENGINE */
+Object *EnneaGetObject(int index);
 
 #endif

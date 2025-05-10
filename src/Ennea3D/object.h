@@ -13,6 +13,8 @@ void EnneaSetMesh(Object *obj, char *path);
 void EnneaCreateObjects(int count);
 void EnneaDestroyObjects();
 void EnneaDestroyObject(Object *object);
+void EnneaListObjects();
+void EnneaAddObject(Object *obj);
 
 void EnneaDestroyObject(Object *object)
 {
@@ -22,21 +24,24 @@ void EnneaDestroyObject(Object *object)
 
 void EnneaDestroyObjects()
 {
-        for (int i = 0; i < object_count; ++i)
-                EnneaDestroyObject(Objects[i]);
-        free(Objects);
+        Object *obj = RootObject;
+        Object *prv = NULL;
+        while (obj)
+        {
+                if (prv)
+                        EnneaDestroyObject(prv);
+                prv = obj;
+                obj = obj->next;
+        }
 }
 
 void EnneaCreateObjects(int count)
 {
-        for (int i = 0; i < object_count; ++i)
-                EnneaDestroyObject(Objects[i]);
-        free(Objects);
-        Objects = malloc(count * sizeof(Object *));
+        EnneaDestroyObjects();
         object_count = count;
         for (int i = 0; i < count; ++i)
         {
-                Objects[i] = EnneaCreateObject("assets/box.obj");
+                EnneaCreateObject("assets/box.obj");
         }
 }
 
@@ -48,12 +53,14 @@ void EnneaSetMesh(Object *obj, char *path)
 
 Object *EnneaCreateObject(char *path)
 {
+        static int ID=0;
         Object *object = malloc(sizeof(Object));
         object->mesh = fast_obj_read(path);
         // default values
         object->scale[0] = 1.0f;
         object->scale[1] = 1.0f;
         object->scale[2] = 1.0f;
+        object->ID = ID++;
 
         object->Collision.minX = -(object->scale[0] / 2);
         object->Collision.maxX = object->scale[0] / 2;
@@ -84,7 +91,7 @@ Object *EnneaCreateObject(char *path)
 
         object->frozen = true;
         object->texture = EnneaLoadTexture("assets/no-texture.png");
-
+        EnneaAddObject(object);
         return object;
 }
 
@@ -189,11 +196,13 @@ int EnneaCheckCollision(Object *obj1, Object *obj2)
 
 void EnneaDrawObjects()
 {
-        for (int i = 0; i < object_count; ++i)
+        Object *obj = RootObject;
+        while (obj)
         {
-                EnneaDrawObject(Objects[i]);
+                EnneaDrawObject(obj);
                 if (nerd)
-                        EnneaStatsForNerds(Objects[i]);
+                        EnneaStatsForNerds(obj);
+                obj = obj->next;
         }
 }
 
@@ -245,6 +254,47 @@ void EnneaForce(Object *obj, double force)
         obj->vel[0] += fx * force;
         obj->vel[1] += fy * force;
         obj->vel[2] += fz * force;
+}
+
+void EnneaAddObject(Object *obj)
+{
+        if (!obj) return;
+        if (!RootObject)
+        {
+                RootObject = obj;
+                RootObject->next = NULL;
+                return;
+        }
+
+        Object *end = RootObject;
+        while (end->next)
+        {
+                end = end->next;
+        }
+        end->next = obj;
+        obj->next = NULL;
+}
+
+void EnneaListObjects()
+{
+        Object *obj = RootObject;
+        while (obj)
+        {
+                printf("Object @%p,ID=%d\n",obj,obj->ID);
+                obj = obj->next;
+        }
+}
+
+Object *EnneaGetObject(int index)
+{
+        Object *obj = RootObject;
+        while (index--)
+        {
+                if (obj == NULL) return NULL;
+                obj = obj->next;
+        }
+
+        return obj;
 }
 
 #endif

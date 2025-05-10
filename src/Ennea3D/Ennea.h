@@ -32,7 +32,6 @@ void EnneaInit()
 void EnneaEnd()
 {
         EnneaDestroyObjects();
-        free(Objects);
         End();
         exit(0);
 }

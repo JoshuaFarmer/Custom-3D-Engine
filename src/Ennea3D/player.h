@@ -132,7 +132,8 @@ bool EnneaPlayerColliding()
         int collisions = 0;
         for (int a = 0; a < object_count; ++a)
         {
-                collisions += EnneaPlayerObjectCollision(Objects[a]);
+                Object *obj = EnneaGetObject(a);
+                collisions += EnneaPlayerObjectCollision(obj);
         }
         return collisions != 0;
 }

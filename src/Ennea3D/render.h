@@ -96,8 +96,9 @@ void EnneaRender()
         /* update */
         for (int i = 0; i < object_count; ++i)
         {
-                EnneaUpdateObject(Objects[i], deltaTime, air_resistance);
-                EnneaHandlePlayerCollision(Objects[i]);
+                Object *obj = EnneaGetObject(i);
+                EnneaUpdateObject(obj, deltaTime, air_resistance);
+                EnneaHandlePlayerCollision(obj);
         }
 
         Draw();
